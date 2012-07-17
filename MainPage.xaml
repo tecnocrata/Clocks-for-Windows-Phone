@@ -1,0 +1,189 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Modulo6.Actividad1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:clock="clr-namespace:Modulo6.Actividad1" mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    Loaded="PhoneApplicationPage_Loaded">
+
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Name="Storyboard1">
+            <DoubleAnimation x:Name="segundosAnimation"
+                             From="0" 
+                             To="360"
+                             Duration="00:01:00"
+                             Storyboard.TargetName="secondsTransformation"
+                             Storyboard.TargetProperty="Angle" 
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation x:Name="minutosAnimation"
+                             From="0" 
+                             To="360"
+                             Duration="01:00:00"
+                             Storyboard.TargetName="minutesTransformation"
+                             Storyboard.TargetProperty="Angle" 
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation x:Name="horasAnimation"
+                             From="0" 
+                             To="360"
+                             Duration="12:0:0"
+                             Storyboard.TargetName="hoursTransformation"
+                             Storyboard.TargetProperty="Angle" 
+                             RepeatBehavior="Forever"/>
+
+        </Storyboard>
+        <clock:Reloj x:Key="myClock"></clock:Reloj>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource clockBrush}">
+        <Grid.Resources>
+
+            <clock:TimeFormatConverter x:Key="timeFormater"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,0">
+            <TextBlock x:Name="ApplicationTitle" Text="Enrique Ortuno" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="reloj" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0*" />
+                <RowDefinition Height="0*" />
+            </Grid.RowDefinitions>
+            <Canvas x:Name="AnalogClock" Visibility="Visible" Height="0" Margin="16,-27,-16,0" VerticalAlignment="Top">
+                <Canvas d:LayoutOverrides="VerticalAlignment, GridBox" Height="0" Width="456">
+
+                    <!-- Bevel -->
+                    <Ellipse Height="290" Width="290" Stroke="#FF000000" Canvas.Left="132" Canvas.Top="2">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush EndPoint="0.84,0.87" StartPoint="0.164,0.129">
+                                <GradientStop Color="#FF2F2F32"/>
+                                <GradientStop Color="#FFE4E5F4" Offset="0.987"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <!-- Face -->
+                    <Ellipse Height="270" 
+        				Stroke="#FF000000" Width="270" Canvas.Left="142" Canvas.Top="12">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Images/clock.png" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <!-- Center -->
+                    <Ellipse Fill="#FF000000" Height="30" 
+        				Stroke="#FF008000" StrokeThickness="8" VerticalAlignment="Top" 
+        				Width="30" Canvas.Left="262" Canvas.Top="132" />
+
+                    <!-- Second Hand -->
+                    <Rectangle x:Name="secondHand" Fill="#FFFF0000" Height="80"  RenderTransformOrigin="0.45,1.34" 
+        				Stroke="#FF000000" VerticalAlignment="Top" Width="5" Canvas.Left="275" Canvas.Top="37" >
+                        <Rectangle.RenderTransform>
+                            <RotateTransform x:Name="secondsTransformation"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+
+                    <!-- Minute Hand -->
+                    <Rectangle x:Name="minuteHand" Fill="#FF008000" Height="80" RenderTransformOrigin="0.45,1.34" 
+        				Stroke="#FF008000" VerticalAlignment="Top" Width="9" Canvas.Left="273" Canvas.Top="37" >
+                        <Rectangle.RenderTransform>
+                            <RotateTransform x:Name="minutesTransformation"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+
+                    <!-- Hour Hand -->
+                    <Rectangle x:Name="hourHand" Fill="#FF008000" Height="60" RenderTransformOrigin="0.45,1.45" 
+        				Stroke="#FF008000" VerticalAlignment="Top" Width="11" Canvas.Left="272" Canvas.Top="57" >
+                        <Rectangle.RenderTransform>
+                            <RotateTransform x:Name="hoursTransformation"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Canvas>
+                <Canvas x:Name="AnalogRoboticClock" Visibility="Visible" Height="0" Width="456" d:LayoutOverrides="VerticalAlignment">
+
+                    <!-- Bevel -->
+                    <Ellipse Height="290" Width="290" Stroke="#FF000000" Canvas.Top="289" Canvas.Left="-18">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush EndPoint="0.84,0.87" StartPoint="0.164,0.129">
+                                <GradientStop Color="#FF2F2F32"/>
+                                <GradientStop Color="#FFE4E5F4" Offset="0.987"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <!-- Face -->
+                    <Ellipse Height="270" 
+        				Stroke="#FF000000" Width="270" Canvas.Top="299" Canvas.Left="-8">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Images/clock.png" />
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <!-- Center -->
+                    <Ellipse Fill="#FF000000" Height="30" 
+        				Stroke="#FF008000" StrokeThickness="8" VerticalAlignment="Top" 
+        				Width="30" Canvas.Left="112" Canvas.Top="419" />
+
+                    <!-- Second Hand -->
+                    <Rectangle x:Name="secondRoboticHand" Fill="#FFFF0000" Height="80"  RenderTransformOrigin="0.45,1.34" 
+        				Stroke="#FF000000" VerticalAlignment="Top" Width="5" Canvas.Left="125" Canvas.Top="324" >
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="{Binding AnguloSegundos, Source={StaticResource myClock}}"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+
+                    <!-- Minute Hand -->
+                    <Rectangle x:Name="minuteRoboticHand" Fill="#FF008000" Height="80" RenderTransformOrigin="0.45,1.34" 
+        				Stroke="#FF008000" VerticalAlignment="Top" Width="9" Canvas.Left="123" Canvas.Top="324" >
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="{Binding AnguloMinutos, Source={StaticResource myClock}}"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+
+                    <!-- Hour Hand -->
+                    <Rectangle x:Name="hourRoboticHand" Fill="#FF008000" Height="60" RenderTransformOrigin="0.45,1.45" 
+        				Stroke="#FF008000" VerticalAlignment="Top" Width="11" Canvas.Left="122" Canvas.Top="344" >
+                        <Rectangle.RenderTransform>
+                            <RotateTransform Angle="{Binding AnguloHoras, Source={StaticResource myClock}}"/>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </Canvas>
+            </Canvas>
+            <Grid x:Name="DigitalClock" Grid.Row="1" Visibility="Visible" Margin="0,0,0,-140" d:IsHidden="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" x:Name="lblHoras" Text="{Binding Horas, Converter={StaticResource timeFormater}, Source={StaticResource myClock}}" VerticalAlignment="Top" FontSize="70" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text=":" VerticalAlignment="Top" FontSize="70" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="2" x:Name="lblMinutos" Text="{Binding Minutos, Converter={StaticResource timeFormater}, Source={StaticResource myClock}}" VerticalAlignment="Top" FontSize="70" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="3" Text=":" VerticalAlignment="Top" FontSize="70" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="4" x:Name="lblSegundos" Text="{Binding Segundos, Converter={StaticResource timeFormater}, Source={StaticResource myClock}}" VerticalAlignment="Top" FontSize="40" HorizontalAlignment="Center" Foreground="BurlyWood" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.feature.settings.rest.png" Text="Configurar" Click="ApplicationBarIconButton_Click" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
